@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سبحة إلكترونية</title>
+
+<style>
+
+body{
+    font-family:Tahoma;
+    background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    margin:0;
+}
+
+.card{
+    width:90%;
+    max-width:500px;
+    background:rgba(255,255,255,0.08);
+    border-radius:25px;
+    padding:25px;
+    text-align:center;
+
+    backdrop-filter: blur(10px);
+    box-shadow:0 0 25px rgba(0,0,0,0.35);
+}
+
+h1{
+    font-size:28px;
+    margin-bottom:5px;
+}
+
+.dedication{
+    font-size:14px;
+    opacity:0.85;
+    margin-bottom:15px;
+    line-height:1.6;
+}
+
+select{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    margin-bottom:20px;
+    font-size:18px;
+}
+
+.zekr{
+    background:rgba(255,255,255,0.12);
+    padding:18px;
+    border-radius:18px;
+    min-height:80px;
+    font-size:22px;
+    line-height:1.8;
+    margin-bottom:20px;
+}
+
+.counter{
+    font-size:70px;
+    margin:20px 0;
+    font-weight:bold;
+    transition:0.2s;
+}
+
+button{
+    border:none;
+    border-radius:18px;
+    padding:15px 22px;
+    font-size:20px;
+    cursor:pointer;
+    margin:8px;
+    transition:0.25s;
+}
+
+button:hover{
+    opacity:0.9;
+    transform:translateY(-2px);
+}
+
+.tap:active{
+    transform:scale(0.96);
+}
+
+.tap{
+    background:#00c853;
+    color:white;
+}
+
+.reset{
+    background:#ff5252;
+    color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h1>📿 سبحة إلكترونية</h1>
+
+<div class="dedication">
+صدقة على روح المغفور له بإذن الله<br>
+أيمن محمود علي
+</div>
+
+<select id="zekrSelect" onchange="changeZekr()">
+
+<option>سبحان الله</option>
+<option>الحمد لله</option>
+<option>الله أكبر</option>
+<option>لا إله إلا الله</option>
+<option>أستغفر الله العظيم</option>
+<option>اللهم ارحم أيمن محمود علي واغفر له</option>
+
+</select>
+
+<div class="zekr" id="currentZekr">
+سبحان الله
+</div>
+
+<div class="counter" id="counter">0</div>
+
+<button class="tap" onclick="increaseCounter()">
+تسبيح 📿
+</button>
+
+<button class="reset" onclick="resetCounter()">
+إعادة 🔄
+</button>
+
+</div>
+
+<script>
+
+let counts = {
+    "سبحان الله": 0,
+    "الحمد لله": 0,
+    "الله أكبر": 0,
+    "لا إله إلا الله": 0,
+    "أستغفر الله العظيم": 0,
+    "اللهم ارحم أيمن محمود علي واغفر له": 0
+};
+
+let currentZekr = "سبحان الله";
+
+if(localStorage.getItem("tasbeehCounts")){
+    counts = JSON.parse(localStorage.getItem("tasbeehCounts"));
+}
+
+document.getElementById("counter").innerText =
+counts[currentZekr];
+
+function increaseCounter(){
+
+    counts[currentZekr]++;
+
+    localStorage.setItem(
+        "tasbeehCounts",
+        JSON.stringify(counts)
+    );
+
+    document.getElementById("counter").innerText =
+    counts[currentZekr];
+}
+
+function resetCounter(){
+
+    counts[currentZekr] = 0;
+
+    localStorage.setItem(
+        "tasbeehCounts",
+        JSON.stringify(counts)
+    );
+
+    document.getElementById("counter").innerText = 0;
+}
+
+function changeZekr(){
+
+    currentZekr =
+    document.getElementById("zekrSelect").value;
+
+    document.getElementById("currentZekr").innerText =
+    currentZekr;
+
+    document.getElementById("counter").innerText =
+    counts[currentZekr];
+}
+
+</script>
+
+</body>
+</html>
